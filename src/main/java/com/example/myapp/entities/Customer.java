@@ -1,54 +1,41 @@
 package com.example.myapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="CUSTOMERS")
+@Table(name="customers")
+@Getter
+@Setter
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Customer_ID")
+    @Column(name = "customer_id")
     private Long id;
-    @Column(name = "First_Name")
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "Last_Name")
+    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "Address")
+    @Column(name = "address")
     private String address;
-    @Column(name = "Postal_Code")
+    @Column(name = "postal_code")
     private String postal_code;
-    @Column(name = "Phone")
+    @Column(name = "phone")
     private String phone;
-    @Column(name = "Create_Date")
+    @Column(name = "create_date")
     private Date create_date;
-    @Column(name = "Last_Update")
+    @Column(name = "last_update")
     private Date last_update;
-    @Column(name = "Division_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "division_id", nullable = false, insertable = false, updatable = false)
     private Division division;
-    @OneToMany
-    //fix me
-    private Set<Cart> carts;
-
-    public Customer(){
-    };
-
-    public Customer(String firstName, String lastName, String address, String postal_code, String phone, Date create_date,
-     Date last_update, Division division, Set<Cart> carts) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.postal_code = postal_code;
-        this.phone = phone;
-        this.create_date = create_date;
-        this.last_update = last_update;
-        this.division = division;
-        this.carts = carts;
-    };
-
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private Set<Cart> carts = new HashSet<>();
 
 }
