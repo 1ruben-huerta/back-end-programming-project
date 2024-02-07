@@ -25,6 +25,7 @@ public class Cart {
     @Column(name = "party_size")
     private int party_size;
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private StatusType status;
     @Column(name = "create_date")
     private Date create_date;
