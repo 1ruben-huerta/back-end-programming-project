@@ -1,6 +1,5 @@
-package com.example.myapp.entities;
+package com.example.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,9 +17,9 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Long id;
-    @Column(name = "first_name")
+    @Column(name = "customer_first_name")
     private String firstName;
-    @Column(name = "last_name")
+    @Column(name = "customer_last_name")
     private String lastName;
     @Column(name = "address")
     private String address;

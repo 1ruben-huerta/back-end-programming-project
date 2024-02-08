@@ -1,4 +1,4 @@
-package com.example.myapp.entities;
+package com.example.demo.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,6 +29,6 @@ public class Vacation {
     private Date create_date;
     @Column(name = "last_update")
     private Date last_update;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vacations")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vacation")
     private Set<Excursion> excursions;
 }
