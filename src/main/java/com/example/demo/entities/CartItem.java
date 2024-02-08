@@ -29,4 +29,6 @@ public class CartItem {
     private Date create_date;
     @Column(name = "last_update")
     private Date last_update;
+
+
 }
