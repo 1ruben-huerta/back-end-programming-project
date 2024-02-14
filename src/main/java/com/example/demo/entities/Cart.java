@@ -3,11 +3,11 @@ package com.example.demo.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="carts")
@@ -18,7 +18,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
     private Long id;
-    @Column(name = "order_tracking_number")
+    @Column(name = "order_tracking_number", nullable = false, insertable = false, updatable = false)
     private String orderTrackingNumber;
     @Column(name = "package_price")
     private BigDecimal package_price;
@@ -27,8 +27,10 @@ public class Cart {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusType status;
+    @CreationTimestamp
     @Column(name = "create_date")
     private Date create_date;
+    @UpdateTimestamp
     @Column(name = "last_update")
     private Date last_update;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,7 +38,6 @@ public class Cart {
     private Customer customer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private Set<CartItem> cartItems = new HashSet<>();
-
 
     public void add(CartItem cartItem) {
         if (cartItem != null) {
@@ -47,4 +48,5 @@ public class Cart {
             cartItem.setCart(this);
         }
     }
+
 }

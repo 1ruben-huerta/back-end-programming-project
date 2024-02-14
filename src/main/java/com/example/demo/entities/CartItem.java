@@ -3,6 +3,8 @@ package com.example.demo.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -25,8 +27,10 @@ public class CartItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false, insertable = false, updatable = false)
     private Cart cart;
+    @CreationTimestamp
     @Column(name = "create_date")
     private Date create_date;
+    @UpdateTimestamp
     @Column(name = "last_update")
     private Date last_update;
 

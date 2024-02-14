@@ -3,6 +3,8 @@ package com.example.demo.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -25,8 +27,10 @@ public class Excursion {
     private BigDecimal excursion_price;
     @Column(name = "image_url")
     private String image_URL;
+    @CreationTimestamp
     @Column(name = "create_date")
     private Date create_date;
+    @UpdateTimestamp
     @Column(name = "last_update")
     private Date last_update;
     @ManyToOne(fetch = FetchType.LAZY)

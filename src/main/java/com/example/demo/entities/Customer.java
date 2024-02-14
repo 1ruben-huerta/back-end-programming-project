@@ -3,6 +3,8 @@ package com.example.demo.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,8 +29,10 @@ public class Customer {
     private String postal_code;
     @Column(name = "phone")
     private String phone;
+    @CreationTimestamp
     @Column(name = "create_date")
     private Date create_date;
+    @UpdateTimestamp
     @Column(name = "last_update")
     private Date last_update;
     @ManyToOne(fetch = FetchType.LAZY)

@@ -11,6 +11,6 @@ import java.util.Set;
 public class Purchase {
 
     private Customer customer;
-    private Cart carts;
+    private Cart cart;
     private Set<CartItem> cartItems;
 }

@@ -8,9 +8,9 @@ import com.example.demo.entities.Cart;
 import com.example.demo.entities.CartItem;
 import com.example.demo.entities.Customer;
 import com.example.demo.entities.StatusType;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.UUID;
@@ -21,36 +21,38 @@ public class CheckoutServiceImpl implements CheckoutService {
     private CartRepository cartRepository;
     private CustomerRepository customerRepository;
     @Autowired
-    public CheckoutServiceImpl(CustomerRepository customerRepository) {
+    public CheckoutServiceImpl(CustomerRepository customerRepository, CartRepository cartRepository) {
         this.customerRepository = customerRepository;
-    }
-    public CheckoutServiceImpl(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
     }
+
 
     @Override
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
 
-        Cart carts = purchase.getCarts();
+        Cart cart = purchase.getCart();
 
         String orderTrackingNumber = generateOrderTrackingNumber();
-        carts.setOrderTrackingNumber(orderTrackingNumber);
+        cart.setOrderTrackingNumber(orderTrackingNumber);
+        String cartEmpty = "Error: Your cart cannot be empty.";
 
         Set<CartItem> cartItems = purchase.getCartItems();
-        cartItems.forEach(cartItem -> carts.add(cartItem));
+        cartItems.forEach(cartItem -> cart.add(cartItem));
 
-        carts.setCartItems(purchase.getCartItems());
-        carts.setCustomer(purchase.getCustomer());
+        cart.setCartItems(purchase.getCartItems());
+        cart.setCustomer(purchase.getCustomer());
 
         Customer customer = purchase.getCustomer();
-        customer.add(carts);
+        customer.add(cart);
 
+        cart.setStatus(StatusType.ordered);
+        cartRepository.save(cart);
         customerRepository.save(customer);
-        cartRepository.save(carts);
-        carts.setStatus(StatusType.ordered);
 
-        return new PurchaseResponse(orderTrackingNumber);
+        if (cart == null || cartItems.isEmpty()) {
+            return new PurchaseResponse(cartEmpty);
+        } else return new PurchaseResponse(orderTrackingNumber);
     }
 
     private String generateOrderTrackingNumber() {
