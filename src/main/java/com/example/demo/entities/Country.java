@@ -10,10 +10,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name="countries")
 @Getter
 @Setter
+@Entity
+@Table(name="countries")
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

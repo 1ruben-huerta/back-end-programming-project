@@ -10,10 +10,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name="divisions")
 @Getter
 @Setter
+@Entity
+@Table(name="divisions")
 public class Division {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

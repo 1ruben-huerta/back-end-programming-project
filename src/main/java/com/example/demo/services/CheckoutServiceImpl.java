@@ -21,9 +21,9 @@ public class CheckoutServiceImpl implements CheckoutService {
     private CartRepository cartRepository;
     private CustomerRepository customerRepository;
     @Autowired
-    public CheckoutServiceImpl(CustomerRepository customerRepository, CartRepository cartRepository) {
-        this.customerRepository = customerRepository;
+    public CheckoutServiceImpl(CartRepository cartRepository, CustomerRepository customerRepository) {
         this.cartRepository = cartRepository;
+        this.customerRepository = customerRepository;
     }
 
 
@@ -35,28 +35,24 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         String orderTrackingNumber = generateOrderTrackingNumber();
         cart.setOrderTrackingNumber(orderTrackingNumber);
-        String cartEmpty = "Error: Your cart cannot be empty.";
 
         Set<CartItem> cartItems = purchase.getCartItems();
-        cartItems.forEach(cartItem -> cart.add(cartItem));
+        cartItems.forEach(item -> cart.add(item));
+        cart.setStatus(StatusType.ordered);
 
         cart.setCartItems(purchase.getCartItems());
         cart.setCustomer(purchase.getCustomer());
 
         Customer customer = purchase.getCustomer();
-        customer.add(cart);
+        customer.getCarts().add(cart);
 
-        cart.setStatus(StatusType.ordered);
-        cartRepository.save(cart);
         customerRepository.save(customer);
+        cartRepository.save(cart);
 
-        if (cart == null || cartItems.isEmpty()) {
-            return new PurchaseResponse(cartEmpty);
-        } else return new PurchaseResponse(orderTrackingNumber);
+        return new PurchaseResponse(orderTrackingNumber);
     }
 
     private String generateOrderTrackingNumber() {
-
         return UUID.randomUUID().toString();
     }
 }

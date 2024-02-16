@@ -10,15 +10,15 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Entity
-@Table(name="carts")
 @Getter
 @Setter
+@Table(name="carts")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
     private Long id;
-    @Column(name = "order_tracking_number", nullable = false, insertable = false, updatable = false)
+    @Column(name = "order_tracking_number")
     private String orderTrackingNumber;
     @Column(name = "package_price")
     private BigDecimal package_price;
@@ -26,15 +26,15 @@ public class Cart {
     private int party_size;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private StatusType status;
+    private StatusType status = StatusType.pending;
     @CreationTimestamp
     @Column(name = "create_date")
     private Date create_date;
     @UpdateTimestamp
     @Column(name = "last_update")
     private Date last_update;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER) //edited from lazy
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private Set<CartItem> cartItems = new HashSet<>();

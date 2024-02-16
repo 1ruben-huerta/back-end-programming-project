@@ -39,6 +39,7 @@ public class RestDataConfig implements RepositoryRestConfigurer {
         config.exposeIdsFor(Division.class);
         config.exposeIdsFor(Excursion.class);
         config.exposeIdsFor(Vacation.class);
+        config.exposeIdsFor(Cart.class);
         config.setDefaultPageSize(Integer.MAX_VALUE);
         config.setMaxPageSize(Integer.MAX_VALUE);
 

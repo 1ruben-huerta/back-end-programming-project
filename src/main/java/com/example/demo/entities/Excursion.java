@@ -11,10 +11,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name="excursions")
 @Getter
 @Setter
+@Entity
+@Table(name="excursions")
 public class Excursion {
 
     @Id
@@ -33,8 +33,8 @@ public class Excursion {
     @UpdateTimestamp
     @Column(name = "last_update")
     private Date last_update;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vacation_id", nullable = false, insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "vacation_id", nullable = false, insertable = true, updatable = false)
     private Vacation vacation;
     @ManyToMany
     @JoinTable(name = "excursion_cartitem",
