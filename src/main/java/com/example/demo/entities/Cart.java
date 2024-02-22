@@ -33,7 +33,7 @@ public class Cart {
     @UpdateTimestamp
     @Column(name = "last_update")
     private Date last_update;
-    @ManyToOne(fetch = FetchType.EAGER) //edited from lazy
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")

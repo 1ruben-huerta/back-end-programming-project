@@ -31,25 +31,25 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
 
-        Cart cart = purchase.getCart();
+            Cart cart = purchase.getCart();
 
-        String orderTrackingNumber = generateOrderTrackingNumber();
-        cart.setOrderTrackingNumber(orderTrackingNumber);
+            String orderTrackingNumber = generateOrderTrackingNumber();
+            cart.setOrderTrackingNumber(orderTrackingNumber);
 
-        Set<CartItem> cartItems = purchase.getCartItems();
-        cartItems.forEach(item -> cart.add(item));
-        cart.setStatus(StatusType.ordered);
+            Set<CartItem> cartItems = purchase.getCartItems();
+            cartItems.forEach(item -> cart.add(item));
+            cart.setStatus(StatusType.ordered);
 
-        cart.setCartItems(purchase.getCartItems());
-        cart.setCustomer(purchase.getCustomer());
+            cart.setCartItems(purchase.getCartItems());
+            cart.setCustomer(purchase.getCustomer());
 
-        Customer customer = purchase.getCustomer();
-        customer.getCarts().add(cart);
+            Customer customer = purchase.getCustomer();
+            customer.add(cart);
 
-        customerRepository.save(customer);
-        cartRepository.save(cart);
+            customerRepository.save(customer);
+            cartRepository.save(cart);
 
-        return new PurchaseResponse(orderTrackingNumber);
+            return new PurchaseResponse(orderTrackingNumber);
     }
 
     private String generateOrderTrackingNumber() {
