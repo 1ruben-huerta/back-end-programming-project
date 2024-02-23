@@ -39,12 +39,22 @@ public class Customer {
     @UpdateTimestamp
     @Column(name = "last_update")
     private Date last_update;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "division_id")
     private Division division;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Cart> carts = new HashSet<>();
 
+    public Customer(){ };
+
+    public Customer(String firstName, String lastName, String address, String postal_code, String phone, Division division) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.postal_code = postal_code;
+        this.phone = phone;
+        this.division = division;
+    }
 
    public void add(Cart cart) {
        if (cart != null) {
