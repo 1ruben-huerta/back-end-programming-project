@@ -73,7 +73,7 @@ public class BootStrapData implements CommandLineRunner {
             customer5.setAddress("273 Palm Loop");
             customer5.setPostal_code("93827");
             customer5.setPhone("951-325-0394");
-            customer5.setDivision(division.get(23));
+            customer5.setDivision(division.get(37));
             customerRepository.save(customer5);
             System.out.println("Customers have now been created.");
         } else {

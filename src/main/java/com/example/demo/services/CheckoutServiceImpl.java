@@ -47,7 +47,13 @@ public class CheckoutServiceImpl implements CheckoutService {
         customerRepository.save(customer);
         cartRepository.save(cart);
 
-        return new PurchaseResponse(orderTrackingNumber);
+        if(cartItems.isEmpty()) {
+            return new PurchaseResponse("Error: Tracking number cannot be generated on an empty cart.");
+        } else if (cart.getParty_size() <= 0) {
+            return new PurchaseResponse("Error: Your party size must be above zero to generate a tracking number.");
+        } else {
+            return new PurchaseResponse(orderTrackingNumber);
+        }
     }
 
     private String generateOrderTrackingNumber() {
