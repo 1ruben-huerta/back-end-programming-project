@@ -44,7 +44,7 @@ public class CheckoutServiceImpl implements CheckoutService {
         Customer customer = purchase.getCustomer();
         customer.add(cart);
 
-        customerRepository.save(customer);
+        //customerRepository.save(customer);
         cartRepository.save(cart);
 
         if(cartItems.isEmpty()) {
